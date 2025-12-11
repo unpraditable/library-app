@@ -3,7 +3,7 @@ import { Book } from "./Book";
 import Member from "./Member";
 
 export default class LibraryService {
-  private books: IBook[];
+  private books: Book[];
   private members: Member[];
   constructor({
     books = [],
@@ -12,7 +12,7 @@ export default class LibraryService {
     books: IBook[];
     members: Member[];
   }) {
-    this.books = books;
+    this.books = books.map((bookData) => new Book(bookData));
     this.members = members;
   }
 
@@ -23,7 +23,6 @@ export default class LibraryService {
   }
   searchBooks(searchTerm: string) {
     return this.books.filter((book) => {
-      console.log(book.author);
       return (
         book?.author?.includes(searchTerm) || book.title.includes(searchTerm)
       );
@@ -31,17 +30,17 @@ export default class LibraryService {
   }
 
   borrowBooks(bookId: string, memberId: string) {
-    if (!this.books.includes(bookId)) {
+    const borrowedBook = this.getBookById(bookId);
+
+    if (!borrowedBook) {
       throw new Error("Book not found!");
     }
 
-    if (this.books.isBorrowed()) {
+    if (borrowedBook.getIsBorrowed()) {
       throw new Error("Book is already borrowed!");
     }
 
-    const borrowedBook = this.getBookById("bookId");
-
-    borrowedBook?.borrow();
+    borrowedBook.borrow();
 
     return {
       successMessage: "Book is borrowed successfully!",
