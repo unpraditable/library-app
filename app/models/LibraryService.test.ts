@@ -10,8 +10,14 @@ describe("Library Service Class", () => {
           isBorrowed: false,
           title: "Laskar Pelangi",
         },
-        { members: [{ id: "1", name: "Ikal" }] },
+        {
+          author: "Another Author",
+          id: "2",
+          isBorrowed: false,
+          title: "Another Book",
+        },
       ],
+      members: [],
     });
 
     expect(libraryService.searchBooks("Andrea")).toEqual([
@@ -21,7 +27,6 @@ describe("Library Service Class", () => {
         isBorrowed: false,
         title: "Laskar Pelangi",
       },
-      { members: [{ id: "1", name: "Ikal" }] },
     ]);
   });
 });

@@ -1,14 +1,15 @@
+import { IBook } from "app/interfaces/IBook";
 import { Book } from "./Book";
 import Member from "./Member";
 
 export default class LibraryService {
-  private books: Book[];
+  private books: IBook[];
   private members: Member[];
   constructor({
     books = [],
     members = [],
   }: {
-    books: Book[];
+    books: IBook[];
     members: Member[];
   }) {
     this.books = books;
